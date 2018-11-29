@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Contact Agenda</string>
+    <string name="searchPlaceholder">Enter Name</string>
+    <string name="searchButton">Search</string>
+    <string name="addButton">Add</string>
+    <string name="nameLabel">Name</string>
+    <string name="phoneLabel">Phone</string>
+    <string name="addNamePlaceholder">Enter Name</string>
+    <string name="addPhonePlaceholder">Enter Phone</string>
+    <string name="backButton">Back</string>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Agenda de contactos</string>
+    <string name="searchPlaceholder">Introduce nombre</string>
+    <string name="searchButton">Buscar</string>
+    <string name="addButton">Añadir</string>
+    <string name="nameLabel">Nombre</string>
+    <string name="phoneLabel">Teléfono</string>
+    <string name="addNamePlaceholder">Introduce Nombre</string>
+    <string name="addPhonePlaceholder">Introduce Teléfono</string>
+    <string name="backButton">Volver</string>
+</resources>
