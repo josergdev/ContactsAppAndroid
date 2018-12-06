@@ -8,4 +8,7 @@
     <string name="addNamePlaceholder">Enter Name</string>
     <string name="addPhonePlaceholder">Enter Phone</string>
     <string name="backButton">Back</string>
+    <string name="errorMsg">The text fields can not be empty.</string>
+    <string name="addingContact">Saving new contact...</string>
+    <string name="updatingContact">Updating contact...</string>
 </resources>

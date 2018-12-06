@@ -73,10 +73,10 @@ public class AgendaHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<Contact> getAllContacts() {
-        List<Contact> contacts = new ArrayList<>();
+    public ArrayList<Contact> getAllContacts() {
+        ArrayList<Contact> contacts = new ArrayList<>();
 
-        String CONTACT_SELECT_QUERY =  String.format("SELECT * FROM %s",  TABLE_CONTACT);
+        String CONTACT_SELECT_QUERY =  String.format("SELECT * FROM %s ORDER BY "+ KEY_CONTACT_NAME,  TABLE_CONTACT);
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(CONTACT_SELECT_QUERY, null);
@@ -117,14 +117,14 @@ public class AgendaHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<Contact> findContactsWithPattern(String pattern) {
-        List<Contact> contacts = new ArrayList<>();
+    public ArrayList<Contact> findContactsWithPattern(String pattern) {
+        ArrayList<Contact> contacts = new ArrayList<>();
 
         String whereClause = KEY_CONTACT_NAME +" like ?";
         String[] whereArgs = {pattern + "%"};
 
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_CONTACT, null,  whereClause, whereArgs, null, null, null);
+        Cursor cursor = db.query(TABLE_CONTACT, null,  whereClause, whereArgs, null, null, KEY_CONTACT_NAME);
         try {
             if (cursor.moveToFirst()) {
                 do {
@@ -145,6 +145,41 @@ public class AgendaHelper extends SQLiteOpenHelper {
         }
 
         return contacts;
+    }
+
+    public Contact getContactByName(String name) {
+        String whereClause = KEY_CONTACT_NAME +" = ?";
+        String[] whereArgs = {name};
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_CONTACT, null,  whereClause, whereArgs, null, null, KEY_CONTACT_NAME);
+        Contact contact = null;
+        try {
+            if (cursor.moveToFirst()) {
+                contact = new Contact();
+                contact.id = cursor.getInt(cursor.getColumnIndex(KEY_CONTACT_ID));
+                contact.name = cursor.getString(cursor.getColumnIndex(KEY_CONTACT_NAME));
+                contact.phone = cursor.getString(cursor.getColumnIndex(KEY_CONTACT_PHONE));
+            }
+        } catch (Exception e) {
+            System.err.println("Error while trying to get contact by name from database");
+            System.err.println(e.getMessage());
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+
+        return contact;
+    }
+
+    public void updateContactPhone(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_CONTACT_PHONE, contact.phone);
+        String whereClause = KEY_CONTACT_NAME + " = ?";
+        String[] whereArgs = { contact.name };
+        db.update(TABLE_CONTACT, values, whereClause, whereArgs);
     }
 
 }
